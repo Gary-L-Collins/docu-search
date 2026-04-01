@@ -1,7 +1,7 @@
 from time import sleep
 
 from .schemas import EmbedJob, JobStatus, JobType
-from .worker import process_job
+from .runner import process_job
 
 POLL_INTERVAL_SECONDS = 5
 
@@ -17,7 +17,7 @@ def get_next_job() -> EmbedJob | None:
 
 def persist_job_status(job: EmbedJob) -> None:
     """
-    Placeholder for saving the mutated job back to your job store.
+    Placeholder
     """
     pass
 
