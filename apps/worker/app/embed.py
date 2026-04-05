@@ -1,8 +1,5 @@
-import chromadb
 import numpy as np
 from typing import List
-from dataclasses import asdict
-from pathlib import Path
 from .schemas import Chunk
 from sentence_transformers import SentenceTransformer
 
@@ -20,7 +17,7 @@ def get_embed_model(model_name: str) -> SentenceTransformer:
 
     return SentenceTransformer(resolved_name)
 
-def embed_text(model: SentenceTransformer, text: str|List[str], batch_size: int=64) -> np.ndarray:
+def embed_text(model: SentenceTransformer, text: str|List[str], batch_size: int=64) -> np.ndarray | None:
     if not text:
         return None
 

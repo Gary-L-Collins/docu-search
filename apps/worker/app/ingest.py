@@ -1,7 +1,5 @@
 from pathlib import Path
-from typing import Dict, List
 from pypdf import PdfReader
-from uuid import uuid4
 
 from .schemas import ParsedDocument
 
@@ -20,13 +18,14 @@ def read_pdf(pdf_path: Path | str, document_id: str) -> ParsedDocument:
             texts.append((page_number, t))
 
     # getting metadata
-    meta = r.metadata
-    author = meta.author if meta.author != "" else "Author Not Found in Metadata"
-    title = meta.title if meta.title != "" else "Title Not Found in Metadata"
+    meta = r.metadata or {}
+    raw_author = getattr(meta, "author", None)
+    raw_title = getattr(meta, "title", pdf_path)
+    author = raw_author or "Author Not Found in Metadata"
+    title = raw_title or "Title Not Found in Metadata"
 
     document = ParsedDocument(document_id, author, title, texts, pdf_path)
 
     return document
-
 
 
